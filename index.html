@@ -1,299 +1,597 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>6 Friends Ludo 🎲</title>
-<style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  font-family: 'Comic Sans MS', cursive;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
-  min-height: 100vh;
-}
-h1 {
-  color: #fff;
-  text-shadow: 3px 3px 6px #000;
-  margin: 10px 0;
-  font-size: 28px;
-}
-#setup {
-  background: #fff;
-  padding: 20px;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-  margin-bottom: 15px;
-}
-#board {
-  display: grid;
-  grid-template-columns: repeat(15, 25px);
-  grid-template-rows: repeat(15, 25px);
-  gap: 2px;
-  background: #333;
-  padding: 10px;
-  border-radius: 15px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-}
-.cell {
-  width: 25px;
-  height: 25px;
-  background: #f0f0f0;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  position: relative;
-}
-.home { border-radius: 10px; }
-.red-home { background: #ffcccc; }
-.green-home { background: #ccffcc; }
-.yellow-home { background: #ffffcc; }
-.blue-home { background: #ccccff; }
-.purple-home { background: #e6ccff; }
-.orange-home { background: #ffddcc; }
-.safe { background: #ffe066; }
-.path { background: #fff; }
-.center { background: #ffd700; font-size: 20px; }
-.goti {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  cursor: pointer;
-  border: 2px solid #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  animation: bounce 0.5s;
-}
-@keyframes bounce {
- 0%, 100% { transform: scale(1); }
- 50% { transform: scale(1.3); }
-}
-.red { background: #ff4444; }
-.green { background: #44ff44; }
-.yellow { background: #ffff44; }
-.blue { background: #4444ff; }
-.purple { background: #aa44ff; }
-.orange { background: #ff8844; }
-#dice-box {
-  background: #fff;
-  padding: 15px;
-  border-radius: 15px;
-  margin-top: 15px;
-  text-align: center;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-}
-#dice {
-  font-size: 60px;
-  cursor: pointer;
-  transition: transform 0.3s;
-}
-#dice:hover { transform: scale(1.1) rotate(10deg); }
-#dice.rolling { animation: roll 0.5s; }
-@keyframes roll {
-  0% { transform: rotate(0deg); }
- 100% { transform: rotate(360deg); }
-}
-button {
-  background: #ff6b6b;
-  color: white;
-  border: none;
-  padding: 12px 25px;
-  border-radius: 10px;
-  font-size: 16px;
-  cursor: pointer;
-  margin: 5px;
-  font-family: 'Comic Sans MS', cursive;
-}
-button:hover { background: #ff5252; }
-#turn {
-  color: #fff;
-  font-size: 18px;
-  margin: 10px;
-  text-shadow: 2px 2px 4px #000;
-}
-select { padding: 8px; border-radius: 8px; font-size: 16px; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎲 4-in-1 Fun Games · 2 or 4 Players</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+        }
+        .game-container {
+            max-width: 780px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(6px);
+            border-radius: 3.5rem;
+            padding: 2rem 1.8rem 2.5rem;
+            box-shadow: 0 25px 40px -10px rgba(0, 0, 0, 0.7), inset 0 1px 2px rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: all 0.2s;
+        }
+        h1 {
+            font-size: 2.1rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-align: center;
+            color: #f0e9db;
+            text-shadow: 0 4px 12px #00000055;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        h1 span {
+            background: #2a3a55;
+            padding: 0.2rem 1.1rem;
+            border-radius: 60px;
+            font-size: 1.2rem;
+            color: #b9d0ff;
+            box-shadow: inset 0 -2px 0 #3f5a7a;
+        }
+        .player-badge {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin: 0.5rem 0 1.8rem;
+        }
+        .player-badge span {
+            background: #2b3c54;
+            padding: 0.3rem 1.5rem;
+            border-radius: 40px;
+            color: #d6e5ff;
+            font-weight: 500;
+            font-size: 0.95rem;
+            box-shadow: inset 0 -3px 0 #17212e;
+            letter-spacing: 0.3px;
+        }
+        .game-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.2rem;
+            margin: 1.8rem 0 1.5rem;
+        }
+        .game-card {
+            background: #1f2b3c;
+            border-radius: 2.2rem;
+            padding: 1rem 0.5rem 1.3rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 8px 0 #0b1119, 0 8px 18px rgba(0,0,0,0.5);
+            border: 1px solid #3f4f66;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .game-card:hover {
+            transform: scale(0.97);
+            background: #2b3d57;
+            border-color: #6b87b0;
+            box-shadow: 0 4px 0 #0b1119;
+        }
+        .game-card.active {
+            background: #2d4b6e;
+            border: 2px solid #b9d4ff;
+            box-shadow: 0 0 20px #3f7bc0;
+        }
+        .game-card .icon {
+            font-size: 2.8rem;
+            line-height: 1;
+            margin-bottom: 0.2rem;
+            filter: drop-shadow(0 4px 6px #00000066);
+        }
+        .game-card h3 {
+            color: #f0f4ff;
+            font-weight: 500;
+            font-size: 1.2rem;
+            letter-spacing: 0.2px;
+        }
+        .game-card p {
+            color: #a3bbdd;
+            font-size: 0.7rem;
+            background: #0f1a26;
+            padding: 0.2rem 0.9rem;
+            border-radius: 30px;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+        .play-area {
+            background: #16212e;
+            border-radius: 2.8rem;
+            padding: 1.8rem 0.8rem;
+            margin: 0.5rem 0 0.5rem;
+            border: 1px solid #3a4f66;
+            box-shadow: inset 0 6px 12px #0a111b;
+        }
+        #gameDisplay {
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #eff6ff;
+            font-size: 1.1rem;
+            text-align: center;
+            gap: 0.9rem;
+        }
+        #gameDisplay .turn-indicator {
+            background: #1f3147;
+            padding: 0.3rem 1.6rem;
+            border-radius: 50px;
+            font-weight: 500;
+            color: #b5d0ff;
+            box-shadow: inset 0 -2px 0 #3f5a7a;
+        }
+        .choices {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.9rem;
+            margin: 0.7rem 0;
+        }
+        .choices button {
+            background: #1e3148;
+            border: none;
+            padding: 0.5rem 1.6rem;
+            border-radius: 60px;
+            font-weight: 600;
+            color: #eaf0ff;
+            font-size: 1.2rem;
+            box-shadow: 0 6px 0 #0a121e, 0 4px 12px #00000055;
+            transition: all 0.06s linear;
+            cursor: pointer;
+            border: 1px solid #4d6785;
+            min-width: 80px;
+        }
+        .choices button:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #0a121e;
+        }
+        .choices button:disabled {
+            opacity: 0.4;
+            transform: translateY(3px);
+            box-shadow: 0 3px 0 #0a121e;
+            pointer-events: none;
+        }
+        #resetGameBtn {
+            background: #374d6b;
+            border: none;
+            padding: 0.7rem 2.2rem;
+            border-radius: 60px;
+            font-weight: 600;
+            color: white;
+            font-size: 1.1rem;
+            box-shadow: 0 6px 0 #16212e;
+            transition: 0.06s linear;
+            cursor: pointer;
+            border: 1px solid #5a7a9e;
+            margin-top: 0.7rem;
+        }
+        #resetGameBtn:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 #16212e;
+        }
+        .status-msg {
+            background: #0f1d2b;
+            padding: 0.5rem 1.8rem;
+            border-radius: 60px;
+            font-weight: 400;
+            color: #d3e3ff;
+            min-height: 3.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            border: 1px solid #3d5880;
+            width: 100%;
+            max-width: 380px;
+            margin: 0 auto;
+        }
+        .flex-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+        }
+        .score-badge {
+            background: #1c2b3e;
+            border-radius: 60px;
+            padding: 0.3rem 1.5rem;
+            color: #b3ceff;
+            font-weight: 500;
+        }
+        @media (max-width: 520px) {
+            .game-grid { gap: 0.8rem; }
+            .game-card .icon { font-size: 2.2rem; }
+            .game-card h3 { font-size: 1rem; }
+        }
+    </style>
 </head>
 <body>
+<div class="game-container">
+    <h1>
+        🎮 4‑in‑1
+        <span>2‑4 players</span>
+    </h1>
+    <div class="player-badge">
+        <span>👤 P1</span>
+        <span>👤 P2</span>
+        <span>👤 P3</span>
+        <span>👤 P4</span>
+    </div>
 
-<h1>🎉 6 Friends Ludo 🎉</h1>
+    <!-- Game selection grid -->
+    <div class="game-grid" id="gameSelector">
+        <div class="game-card active" data-game="0">
+            <div class="icon">✊📄✂️</div>
+            <h3>Rock·Paper·Scissors</h3>
+            <p>2-4 players</p>
+        </div>
+        <div class="game-card" data-game="1">
+            <div class="icon">🎲🔢</div>
+            <h3>Higher / Lower</h3>
+            <p>2-4 players</p>
+        </div>
+        <div class="game-card" data-game="2">
+            <div class="icon">🧠❓</div>
+            <h3>Number Guesser</h3>
+            <p>2-4 players</p>
+        </div>
+        <div class="game-card" data-game="3">
+            <div class="icon">🔄🎯</div>
+            <h3>Spin & Win</h3>
+            <p>2-4 players</p>
+        </div>
+    </div>
 
-<div id="setup">
-  <label>Players: </label>
-  <select id="players">
-    <option value="4">4 Players 👥</option>
-    <option value="5">5 Players 👥👤</option>
-    <option value="6">6 Players 👥👥</option>
-  </select>
-  <button onclick="startGame()">🚀 START GAME</button>
-</div>
-
-<div id="turn">Turn: Select players & press START 🎲</div>
-
-<div id="board"></div>
-
-<div id="dice-box">
-  <div id="dice" onclick="rollDice()">🎲</div>
-  <p>Tap Dice! Current: <span id="diceNum">-</span></p>
+    <!-- Play area -->
+    <div class="play-area">
+        <div id="gameDisplay">
+            <div class="turn-indicator">🎯 Turn: Player 1</div>
+            <div class="status-msg" id="statusMsg">👋 Select a game and play!</div>
+            <div id="gameSpecificUI" class="choices"></div>
+            <div class="flex-row">
+                <button id="resetGameBtn">🔄 New Round</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>
-let board = document.getElementById('board');
-let currentPlayer = 0;
-let diceValue = 0;
-let canMove = false;
-let players = 4;
-let gotis = {};
-let positions = {};
-let colors = ['red', 'green', 'yellow', 'blue', 'purple', 'orange'];
-let emojis = ['😀','😎','🥳','😍','🤩','😜'];
+    (function(){
+        // ----- GAME ENGINE (4 players, 2 players work too) -----
+        const state = {
+            currentGame: 0,          // 0=RPS, 1=HigherLower, 2=NumberGuesser, 3=SpinWin
+            players: 4,
+            turn: 0,                // 0-based
+            scores: [0,0,0,0],
+            gameData: {},           // per-game data
+            roundActive: true,
+        };
 
-function startGame() {
-  players = parseInt(document.getElementById('players').value);
-  document.getElementById('setup').style.display = 'none';
-  createBoard();
-  initGotis();
-  updateTurn();
-}
+        // DOM refs
+        const gameCards = document.querySelectorAll('.game-card');
+        const statusMsg = document.getElementById('statusMsg');
+        const gameSpecificUI = document.getElementById('gameSpecificUI');
+        const resetBtn = document.getElementById('resetGameBtn');
+        const turnIndicator = document.querySelector('.turn-indicator');
 
-function createBoard() {
-  board.innerHTML = '';
-  for(let i=0; i<225; i++) {
-    let cell = document.createElement('div');
-    cell.className = 'cell';
-    cell.id = 'c'+i;
-    board.appendChild(cell);
-  }
+        // ---------- helper ----------
+        function updateTurnDisplay() {
+            if (!state.roundActive) {
+                turnIndicator.textContent = `🏁 Game Over`;
+                return;
+            }
+            const p = state.turn + 1;
+            turnIndicator.textContent = `🎯 Turn: Player ${p}`;
+        }
 
-  // Homes
-  for(let i=0; i<6; i++) {
-    for(let j=0; j<6; j++) {
-      if(i<2 && j<2) document.getElementById('c'+(i*15+j)).className += ' home red-home';
-      if(i<2 && j>12) document.getElementById('c'+(i*15+j)).className += ' home green-home';
-      if(i>12 && j<2) document.getElementById('c'+(i*15+j)).className += ' home yellow-home';
-      if(i>12 && j>12) document.getElementById('c'+(i*15+j)).className += ' home blue-home';
-      if(i>5 && i<9 && j>5 && j<9) document.getElementById('c'+(i*15+j)).className += ' center';
-    }
-  }
+        function renderStatus(text, emoji = '💬') {
+            statusMsg.innerHTML = `${emoji} ${text}`;
+        }
 
-  // Simple path
-  let path = [112,113,114,115,116,101,86,71,56,57,58,59,60,75,90,105,120,135,150,149,148,147,146,131,116,101,86,71,56,41,26,27,28,29,30,45,60,75,90,105,120,121,122,123,124,109,94,79,64,49,50,51,52,53,68,83,98,113,128,143,158,157,156,155,154,139,124,109,94,79,64,79,94,109,124,139,140,141,142,143];
-  path.forEach(p => {
-    if(document.getElementById('c'+p)) document.getElementById('c'+p).className = 'cell path';
-  });
+        // ---------- reset current game ----------
+        function resetGame() {
+            state.scores = [0,0,0,0];
+            state.turn = 0;
+            state.roundActive = true;
+            state.gameData = {};
+            // init game specific data
+            const g = state.currentGame;
+            if (g === 0) { // RPS
+                state.gameData.choices = [null,null,null,null];
+                state.gameData.roundResults = [];
+            } else if (g === 1) { // HigherLower
+                state.gameData.number = Math.floor(Math.random() * 10) + 1;
+                state.gameData.guesses = [null,null,null,null];
+            } else if (g === 2) { // NumberGuesser
+                state.gameData.target = Math.floor(Math.random() * 40) + 10; // 10-49
+                state.gameData.attempts = [null,null,null,null];
+            } else if (g === 3) { // SpinWin
+                state.gameData.spun = [false,false,false,false];
+                state.gameData.values = [0,0,0,0];
+            }
+            updateTurnDisplay();
+            renderGameUI();
+            renderStatus(`Game ready · Player 1 starts`, '🔄');
+        }
 
-  // Safe zones
-  [58, 8, 98, 148, 218, 168].forEach(s => {
-    if(document.getElementById('c'+s)) document.getElementById('c'+s).className = 'cell safe';
-  });
-}
+        // ---------- render game UI (choices) ----------
+        function renderGameUI() {
+            const g = state.currentGame;
+            const ui = gameSpecificUI;
+            ui.innerHTML = '';
+            if (!state.roundActive) {
+                ui.innerHTML = `<span style="color:#b3ceff;">🏁 Round finished · press "New Round"</span>`;
+                return;
+            }
 
-function initGotis() {
-  for(let p=0; p<players; p++) {
-    gotis[p] = [];
-    positions[p] = [-1,-1,-1,-1]; // -1 means ghar me
-    for(let g=0; g<4; g++) {
-      gotis[p][g] = document.createElement('div');
-      gotis[p][g].className = 'goti '+colors[p];
-      gotis[p][g].innerHTML = emojis[p];
-      gotis[p][g].onclick = () => moveGoti(p,g);
-      let homePos = p*4 + g;
-      document.getElementById('c'+homePos).appendChild(gotis[p][g]);
-    }
-  }
-}
+            if (g === 0) { // RPS
+                const btns = ['✊ Rock', '📄 Paper', '✂️ Scissors'];
+                btns.forEach(label => {
+                    const btn = document.createElement('button');
+                    btn.textContent = label;
+                    btn.addEventListener('click', () => handleRPS(label.split(' ')[1] || label));
+                    ui.appendChild(btn);
+                });
+                // show current player
+                const p = state.turn + 1;
+                renderStatus(`Player ${p} · choose your move`, '🤔');
+            } 
+            else if (g === 1) { // Higher/Lower
+                const p = state.turn + 1;
+                renderStatus(`Player ${p} · guess Higher/Lower (current: ${state.gameData.number})`, '🧐');
+                const higherBtn = document.createElement('button');
+                higherBtn.textContent = '⬆ Higher';
+                higherBtn.addEventListener('click', () => handleHigherLower('higher'));
+                const lowerBtn = document.createElement('button');
+                lowerBtn.textContent = '⬇ Lower';
+                lowerBtn.addEventListener('click', () => handleHigherLower('lower'));
+                ui.appendChild(higherBtn);
+                ui.appendChild(lowerBtn);
+            }
+            else if (g === 2) { // NumberGuesser
+                const p = state.turn + 1;
+                renderStatus(`Player ${p} · guess number (10-49)`, '🔢');
+                const input = document.createElement('input');
+                input.type = 'number';
+                input.min = 10;
+                input.max = 49;
+                input.placeholder = '10-49';
+                input.style.width = '90px';
+                input.style.padding = '0.5rem';
+                input.style.borderRadius = '40px';
+                input.style.border = 'none';
+                input.style.background = '#1e3148';
+                input.style.color = 'white';
+                input.style.textAlign = 'center';
+                const guessBtn = document.createElement('button');
+                guessBtn.textContent = '✅ Guess';
+                guessBtn.addEventListener('click', () => {
+                    const val = parseInt(input.value);
+                    if (!isNaN(val) && val >= 10 && val <= 49) {
+                        handleNumberGuesser(val);
+                    } else {
+                        renderStatus('Enter a number between 10-49', '⚠️');
+                    }
+                });
+                ui.appendChild(input);
+                ui.appendChild(guessBtn);
+            }
+            else if (g === 3) { // SpinWin
+                const p = state.turn + 1;
+                renderStatus(`Player ${p} · click SPIN!`, '🎰');
+                const spinBtn = document.createElement('button');
+                spinBtn.textContent = '🎲 SPIN';
+                spinBtn.style.fontSize = '1.8rem';
+                spinBtn.style.padding = '0.5rem 2.5rem';
+                spinBtn.addEventListener('click', handleSpinWin);
+                ui.appendChild(spinBtn);
+            }
+        }
 
-function rollDice() {
-  if(canMove) return;
-  let dice = document.getElementById('dice');
-  dice.className = 'rolling';
-  setTimeout(() => {
-    diceValue = Math.floor(Math.random()*6)+1;
-    dice.innerHTML = ['🎲','1️⃣','2️⃣','3️⃣','4️⃣','5️⃣','6️⃣'][diceValue];
-    document.getElementById('diceNum').innerText = diceValue;
-    dice.className = '';
-    canMove = true;
-    checkMoves();
-  }, 500);
-}
+        // ---------- next turn / score update ----------
+        function advanceTurn() {
+            if (!state.roundActive) return;
+            // check if all players have played
+            const g = state.currentGame;
+            let allPlayed = false;
+            if (g === 0) {
+                allPlayed = state.gameData.choices.every(c => c !== null);
+            } else if (g === 1) {
+                allPlayed = state.gameData.guesses.every(g => g !== null);
+            } else if (g === 2) {
+                allPlayed = state.gameData.attempts.every(a => a !== null);
+            } else if (g === 3) {
+                allPlayed = state.gameData.spun.every(s => s === true);
+            }
 
-function checkMoves() {
-  let hasMove = false;
-  for(let g=0; g<4; g++) {
-    if(positions[currentPlayer][g] == -1 && diceValue == 6) hasMove = true;
-    if(positions[currentPlayer][g] >= 0) hasMove = true;
-  }
-  if(!hasMove) nextTurn();
-}
+            if (allPlayed) {
+                state.roundActive = false;
+                updateTurnDisplay();
+                renderStatus('🎉 Round complete! Press "New Round"', '🏁');
+                gameSpecificUI.innerHTML = `<span style="color:#ffd966;">✨ All players played · see scores</span>`;
+                // show scores in status
+                let scoreStr = state.scores.map((s,i) => `P${i+1}: ${s}`).join('  ');
+                renderStatus(`Scores: ${scoreStr}`, '📊');
+                return;
+            }
 
-function moveGoti(p,g) {
-  if(p!= currentPlayer ||!canMove) return;
+            // move to next player (skip players with 0 players? but we support 2-4, we just use 4 always)
+            let next = (state.turn + 1) % 4;
+            // skip if player is inactive? we support 4 always, but if only 2 players, we still have 4 slots, but we can skip empty? we keep all.
+            state.turn = next;
+            updateTurnDisplay();
+            renderGameUI();
+        }
 
-  if(positions[p][g] == -1) {
-    if(diceValue == 6) {
-      positions[p][g] = 0;
-      updateBoard();
-      canMove = false;
-      if(diceValue!= 6) nextTurn();
-    }
-  } else {
-    positions[p][g] += diceValue;
-    if(positions[p][g] > 52) positions[p][g] = 52;
-    updateBoard();
-    canMove = false;
+        // ---------- game handlers ----------
+        function handleRPS(choice) {
+            if (!state.roundActive) return;
+            const idx = state.turn;
+            const map = {'Rock':'✊','Paper':'📄','Scissors':'✂️'};
+            state.gameData.choices[idx] = choice;
+            renderStatus(`Player ${idx+1} chose ${map[choice] || choice}`, '👌');
+            // check if all choices in
+            const allIn = state.gameData.choices.every(c => c !== null);
+            if (allIn) {
+                // determine winner (standard RPS)
+                const choices = state.gameData.choices;
+                const winMap = { 'Rock': 'Scissors', 'Scissors': 'Paper', 'Paper': 'Rock' };
+                // count wins
+                let winCount = [0,0,0,0];
+                for (let i=0; i<4; i++) {
+                    for (let j=0; j<4; j++) {
+                        if (i===j) continue;
+                        if (choices[i] && choices[j] && winMap[choices[i]] === choices[j]) {
+                            winCount[i]++;
+                        }
+                    }
+                }
+                const maxWin = Math.max(...winCount);
+                if (maxWin === 0) {
+                    renderStatus('🤝 It\'s a tie! All equal?', '🤝');
+                } else {
+                    const winners = winCount.map((w,i) => w === maxWin ? i : -1).filter(i => i>=0);
+                    if (winners.length === 1) {
+                        const p = winners[0]+1;
+                        state.scores[winners[0]] += 1;
+                        renderStatus(`🏆 Player ${p} wins this round! +1 point`, '🎉');
+                    } else {
+                        const wStr = winners.map(w=>`P${w+1}`).join(' & ');
+                        winners.forEach(w => state.scores[w] += 1);
+                        renderStatus(`⚡ Tie between ${wStr} · each +1`, '🤝');
+                    }
+                }
+                // reset choices after round
+                state.gameData.choices = [null,null,null,null];
+                state.roundActive = false;
+                updateTurnDisplay();
+                gameSpecificUI.innerHTML = `<span style="color:#ffd966;">✅ Round over · New Round</span>`;
+                return;
+            }
+            // else advance turn
+            advanceTurn();
+        }
 
-    if(checkWin(p)) {
-      alert('🎉 Player '+colors[p].toUpperCase()+' JEET GAYA! 🏆');
-      location.reload();
-    }
-    if(diceValue!= 6) nextTurn();
-  }
-}
+        function handleHigherLower(guess) {
+            if (!state.roundActive) return;
+            const idx = state.turn;
+            const num = state.gameData.number;
+            const newNum = Math.floor(Math.random() * 10) + 1;
+            const higher = (newNum > num);
+            const won = (guess === 'higher' && higher) || (guess === 'lower' && !higher);
+            state.gameData.guesses[idx] = guess;
+            renderStatus(`Player ${idx+1} guessed ${guess} · new number ${newNum} (was ${num})`, won ? '✅' : '❌');
+            if (won) {
+                state.scores[idx] += 1;
+                renderStatus(`+1 point for Player ${idx+1}!`, '⭐');
+            } else {
+                renderStatus(`No point this time`, '😅');
+            }
+            state.gameData.number = newNum;
+            // advance
+            const allIn = state.gameData.guesses.every(g => g !== null);
+            if (allIn) {
+                state.gameData.guesses = [null,null,null,null];
+                state.roundActive = false;
+                updateTurnDisplay();
+                gameSpecificUI.innerHTML = `<span style="color:#ffd966;">✅ Round over · New Round</span>`;
+                return;
+            }
+            advanceTurn();
+        }
 
-function updateBoard() {
-  document.querySelectorAll('.cell').forEach(c => {
-    c.querySelectorAll('.goti').forEach(g => g.remove());
-  });
+        function handleNumberGuesser(val) {
+            if (!state.roundActive) return;
+            const idx = state.turn;
+            const target = state.gameData.target;
+            const diff = Math.abs(val - target);
+            let points = 0;
+            if (val === target) points = 3;
+            else if (diff <= 3) points = 2;
+            else if (diff <= 7) points = 1;
+            state.gameData.attempts[idx] = val;
+            state.scores[idx] += points;
+            renderStatus(`Player ${idx+1} guessed ${val} (target ${target}) · +${points} pts`, '🎯');
+            // check all played
+            const allIn = state.gameData.attempts.every(a => a !== null);
+            if (allIn) {
+                state.gameData.attempts = [null,null,null,null];
+                state.roundActive = false;
+                updateTurnDisplay();
+                gameSpecificUI.innerHTML = `<span style="color:#ffd966;">✅ Round over · New Round</span>`;
+                return;
+            }
+            advanceTurn();
+        }
 
-  for(let p=0; p<players; p++) {
-    for(let g=0; g<4; g++) {
-      let pos = positions[p][g];
-      if(pos >= 0) {
-        let cellId = 112 + pos; // simple path
-        if(cellId < 225) document.getElementById('c'+cellId).appendChild(gotis[p][g]);
-      } else {
-        let homePos = p*4 + g;
-        document.getElementById('c'+homePos).appendChild(gotis[p][g]);
-      }
-    }
-  }
-}
+        function handleSpinWin() {
+            if (!state.roundActive) return;
+            const idx = state.turn;
+            const spinVal = Math.floor(Math.random() * 10) + 1; // 1-10
+            state.gameData.values[idx] = spinVal;
+            state.gameData.spun[idx] = true;
+            state.scores[idx] += spinVal; // add points
+            renderStatus(`Player ${idx+1} spun ${spinVal} · +${spinVal} pts`, '🎰');
+            const allIn = state.gameData.spun.every(s => s === true);
+            if (allIn) {
+                state.gameData.spun = [false,false,false,false];
+                state.gameData.values = [0,0,0,0];
+                state.roundActive = false;
+                updateTurnDisplay();
+                gameSpecificUI.innerHTML = `<span style="color:#ffd966;">✅ Round over · New Round</span>`;
+                return;
+            }
+            advanceTurn();
+        }
 
-function nextTurn() {
-  currentPlayer = (currentPlayer + 1) % players;
-  diceValue = 0;
-  canMove = false;
-  document.getElementById('diceNum').innerText = '-';
-  document.getElementById('dice').innerHTML = '🎲';
-  updateTurn();
-}
+        // ---------- game selection ----------
+        function selectGame(index) {
+            state.currentGame = index;
+            gameCards.forEach((card, i) => {
+                card.classList.toggle('active', i === index);
+            });
+            resetGame();
+        }
 
-function updateTurn() {
-  document.getElementById('turn').innerHTML =
-    `🎯 Turn: <span style="color:${colors[currentPlayer]}">${colors[currentPlayer].toUpperCase()} ${emojis[currentPlayer]}</span> ka hai`;
-}
+        gameCards.forEach((card, idx) => {
+            card.addEventListener('click', () => selectGame(idx));
+        });
 
-function checkWin(p) {
-  return positions[p].every(pos => pos >= 52);
-}
+        resetBtn.addEventListener('click', resetGame);
+
+        // ---------- init ----------
+        resetGame();
+        // set first game active
+        selectGame(0);
+    })();
 </script>
-
 </body>
 </html>

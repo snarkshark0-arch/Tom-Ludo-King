@@ -3,80 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic-Tac-Toe</title>
+    <title>Big Display</title>
     <style>
         body {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            margin: 0;
             background-color: #f0f0f0;
             font-family: Arial, sans-serif;
+            text-align: center;
         }
-        .board {
-            display: grid;
-            grid-template-columns: repeat(3, 100px);
-            grid-template-rows: repeat(3, 100px);
-            gap: 5px;
+        h1 {
+            font-size: 4em;
+            margin: 0;
         }
-        .cell {
-            background-color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        p {
             font-size: 2em;
-            cursor: pointer;
-            border: 2px solid #333;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="board" id="board">
-        <div class="cell" data-index="0"></div>
-        <div class="cell" data-index="1"></div>
-        <div class="cell" data-index="2"></div>
-        <div class="cell" data-index="3"></div>
-        <div class="cell" data-index="4"></div>
-        <div class="cell" data-index="5"></div>
-        <div class="cell" data-index="6"></div>
-        <div class="cell" data-index="7"></div>
-        <div class="cell" data-index="8"></div>
-    </div>
-    <script>
-        const cells = document.querySelectorAll('.cell');
-        let currentPlayer = 'X';
-        let gameOver = false;
-
-        cells.forEach(cell => {
-            cell.addEventListener('click', () => {
-                if (cell.textContent === '' && !gameOver) {
-                    cell.textContent = currentPlayer;
-                    if (checkWin()) {
-                        setTimeout(() => {
-                            alert(currentPlayer + ' wins!');
-                            gameOver = true;
-                        }, 100);
-                    } else {
-                        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-                    }
-                }
-            });
-        });
-
-        function checkWin() {
-            const winningCombos = [
-                [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
-                [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
-                [0, 4, 8], [2, 4, 6] // Diagonals
-            ];
-
-            return winningCombos.some(combo => {
-                const [a, b, c] = combo;
-                return cells[a].textContent === currentPlayer &&
-                       cells[b].textContent === currentPlayer &&
-                       cells[c].textContent === currentPlayer;
-            });
-        }
-    </script>
+    <h1>Welcome to Aleesha Malik</h1>
+    <p>Mafia Don</p>
+    <p>Welcome to Snark Shark City</p>
 </body>
 </html>
